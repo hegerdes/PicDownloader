@@ -1,0 +1,8 @@
+
+#Folder
+pics/*
+
+#Log and Config
+*.log
+*.sh
+settings.json

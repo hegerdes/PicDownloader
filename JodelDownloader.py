@@ -72,7 +72,8 @@ for ch in chanels:
 
     #Download the pics
     for x in photostr:
-        path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + x
+        tmp1, tmp2 = x.split('me/')
+        path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
         #Create Path
         if not os.path.exists(os.path.dirname(path)):
             try:

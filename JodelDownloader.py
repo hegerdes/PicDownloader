@@ -84,7 +84,7 @@ for ch in chanels:
         response = requests.get(x, stream=True)
         with open( path, 'wb') as out_file:
             shutil.copyfileobj(response.raw, out_file)
-            print('Downloading:' + x)
+            print('Downloading: ' + x)
         del response
 #Close browser
 driver.quit()

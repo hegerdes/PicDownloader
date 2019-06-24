@@ -11,6 +11,7 @@
 #               TODO: Scroll the page and wit to load all comments and pic IDs
 #               Somtimes the dirver chraches without a abvious reason. Just restart the Script
 #               TODO Invesigate chrach
+##############################################################################
 import requests
 import re
 import os
@@ -72,12 +73,14 @@ for ch in chanels:
     #Download the pics
     for x in photostr:
         path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + x
+        #Create Path
         if not os.path.exists(os.path.dirname(path)):
             try:
                 os.makedirs(os.path.dirname(path))
             except OSError as exc:
                 if exc.errno != errno.EEXIST:
                     raise
+        #Download files
         response = requests.get(x, stream=True)
         with open( path, 'wb') as out_file:
             shutil.copyfileobj(response.raw, out_file)

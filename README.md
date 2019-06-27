@@ -3,8 +3,11 @@ Python Script to Download Pictures and Videos
 
 IMPORTANT
 ONLY Testet on LINUX with Python 3.7
+
 This provides a script to download all pictues on jodelCity
+
 Supportet are jpg pictures and mp4 video
+
 To work all below packages must be installed and the chrome or firefoc webdriver.
 The driver must be in your PATH. (Chrome is much faster)
 

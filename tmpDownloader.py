@@ -17,46 +17,107 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
 
 now = datetime.datetime.now()
-url = 'https://www.jodel.city/6969'
+url = 'https://www.jodel.city/1234'
 #url = 'https://www.winfuture.de'
 
 browser = webdriver.Chrome()
+
 browser.get(url)
 browser.get(url)
-#ActionChains(browser).move_to_element(browser.find_element_by_id('notif-connected')).perform()
-#browser.sleep(3000);
+
+elem = browser.find_element_by_id('contentArea')
+contentList = elem.find_elements_by_tag_name('li')
+
+# if(len(contentList) > 30):
+#     info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[30]')
+#     browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# if(len(contentList) > 45):
+#     info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[45]')
+#     browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# if(len(contentList) > 60):
+#     info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
+#     browser.execute_script("arguments[0].scrollIntoView();", info)
+
+# elem = browser.find_element_by_id('contentArea')
+# contentList = elem.find_elements_by_tag_name('li')
+
+# print("----------------------------")
+# print(len(contentList))
+# for i in contentList:
+#     print(i.text)
+photostr = []
+
+while(len(contentList) > 65):
+    elem = browser.find_element_by_id('contentArea')
+    contentList = elem.find_elements_by_tag_name('li')
+    if(len(contentList) > 30):
+        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[30]')
+        browser.execute_script("arguments[0].scrollIntoView();", info)
+    if(len(contentList) > 45):
+        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[45]')
+        browser.execute_script("arguments[0].scrollIntoView();", info)
+    if(len(contentList) > 60):
+        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
+        browser.execute_script("arguments[0].scrollIntoView();", info)
+    time.sleep(1)
+
+    for row in contentList:
+        #print(row.text)
+        photoRow = browser.find_elements_by_xpath(".//*[@class='ic']")
+        for ph in photoRow:
+            tmp = ph.get_attribute('data-navigation')
+            if(tmp.__contains__('vid')):
+                #Videos
+                tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
+            else:
+                #Pictures
+                tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
+            photostr.append(tmp)
+    print("----------------------------")
+    if(len(contentList) > 65):
+        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[65]')
+        browser.execute_script("arguments[0].scrollIntoView();", info)
+
+photostr = list(dict.fromkeys(photostr))
+for i in photostr:
+    print(i)
+
+browser.quit()
+
 
 #time.sleep(3)
 
-elem = browser.find_element_by_id('contentArea')
-contentList = elem.find_elements_by_tag_name("li")
+#elem = browser.find_element_by_id('contentArea')
+#contentList = elem.find_elements_by_tag_name("li")
 
 #selects = Select(browser.find_element_by_xpath('//*[@id="contentArea"]/li[1]'))
 #selects.deselect_all()
 
-info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[10]')
-browser.execute_script("arguments[0].scrollIntoView();", info)
-time.sleep(1)
-for i in contentList:
-    print(i.text)
-info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[20]')
-browser.execute_script("arguments[0].scrollIntoView();", info)
-time.sleep(1)
-info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[40]')
-browser.execute_script("arguments[0].scrollIntoView();", info)
-time.sleep(1)
-info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[66]')
-browser.execute_script("arguments[0].scrollIntoView();", info)
-time.sleep(1)
+# info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[10]')
+# browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# for i in contentList:
+#     print(i.text)
+# info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[20]')
+# browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[40]')
+# browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[66]')
+# browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
 
-print('--------------------------------------------------------')
-info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[]')
-browser.execute_script("arguments[0].scrollIntoView();", info)
-time.sleep(1)
-elem = browser.find_element_by_id('contentArea')
-contentList = elem.find_elements_by_tag_name("li")
-for i in contentList:
-    print(i.text)
+# print('--------------------------------------------------------')
+# info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[]')
+# browser.execute_script("arguments[0].scrollIntoView();", info)
+# time.sleep(1)
+# elem = browser.find_element_by_id('contentArea')
+# contentList = elem.find_elements_by_tag_name("li")
+# for i in contentList:
+#     print(i.text)
 
 
 #browser.execute_script("window.scrollTo(0, 1080);")
@@ -72,7 +133,7 @@ for i in contentList:
 
 
 
-htmls = browser.page_source
+#htmls = browser.page_source
 #print(htmls)
 
 #browser.quit()

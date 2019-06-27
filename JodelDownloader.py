@@ -15,11 +15,13 @@
 import requests
 import re
 import os
+import time
 import errno
 import shutil
 import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
 from operator import is_not
 from functools import partial
 
@@ -49,7 +51,14 @@ for ch in chanels:
     ch_url = 'https://www.jodel.city/' + ch
     driver.get(ch_url)
 
-    buttons = driver.find_element_by_id('flacbtn')
+    info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[40]')
+    driver.execute_script("arguments[0].scrollIntoView();", info)
+    time.sleep(1)
+    info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
+    driver.execute_script("arguments[0].scrollIntoView();", info)
+
+    #Everything till comment 1-80 is loaded
+    #If jump to list 66 comments 60 till 138 gets loaded
     elem = driver.find_element_by_id('contentArea')
     contentList = elem.find_elements_by_tag_name('li')
 
@@ -59,6 +68,7 @@ for ch in chanels:
     print('Getting Pictures form ' + driver.title)
     #get pic ids
     for row in contentList:
+        #print(row.text)
         photoRow = row.find_elements_by_xpath(".//*[@class='ic']")
         for ph in photoRow:
             tmp = ph.get_attribute('data-navigation')
@@ -87,5 +97,5 @@ for ch in chanels:
             shutil.copyfileobj(response.raw, out_file)
             print('Downloading: ' + x)
         del response
-#Close browser
+#Close driver
 driver.quit()

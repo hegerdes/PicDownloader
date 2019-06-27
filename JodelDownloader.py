@@ -6,15 +6,21 @@
 # To work all below packages must be installed and the chrome or firefoc webdriver.
 # The driver must be in your PATH. (Chrome is much faster)
 #
-# KNOWN BUGS:   This Script does not get all the pics. JodelCity only loads the first 80
+# KNOWN BUGS:   Now all Pictures in the entire channel gets Downloaded but not all videos
+#               TODO Make sure the video ID is loaded
+#
+# This Script does not get all the pics. JodelCity only loads the first 80
 #               or so comments. So only the pics within thes loaded comments will be found.
-#               TODO: Scroll the page and wit to load all comments and pic IDs
+#               SOLVED
+#
 #               Somtimes the dirver chraches without a abvious reason. Just restart the Script
-#               TODO Invesigate chrach
+#               SOLVED
 ##############################################################################
 import requests
 import re
 import os
+import traceback
+import logging
 import time
 import errno
 import shutil
@@ -22,80 +28,135 @@ import datetime
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from operator import is_not
 from functools import partial
+
+#Changeable Data
+#pause time to scroll
+SCROLL_PAUSE_TIME = 0.5
+#Number of stars a picture must have to download
+Min_OF_STARS = 5
 
 
 #Start URL
 url = 'https://www.jodel.city/3300'
+counter = 0
 
-#Get the driver
-driver = webdriver.Chrome()
-#or
-#driver = webdriver.Firefox()
+try:
+    #Get the driver
+    driver = webdriver.Chrome()
+    #or
+    #driver = webdriver.Firefox()
 
-#Need to call the URL twice
-driver.get(url)
-driver.get(url)
+    #Need to call the URL twice
+    driver.get(url)
+    driver.get(url)
 
-dropdown = driver.find_elements_by_class_name('padded-list')
+    dropdown = driver.find_elements_by_class_name('padded-list')
 
-#Save all chanel IDs
-chanels = []
-for t in dropdown:
-    if(t.get_attribute('data-value') != None):
-        chanels.append(t.get_attribute('data-value'))
+    #Save all chanel IDs
+    chanels = []
+    for t in dropdown:
+        if(t.get_attribute('data-value') != None):
+            chanels.append(t.get_attribute('data-value'))
 
-#Go through all chanels
-for ch in chanels:
-    ch_url = 'https://www.jodel.city/' + ch
-    driver.get(ch_url)
+    #Go through all chanels
+    for ch in chanels:
+        ch_url = 'https://www.jodel.city/' + ch
+        driver.get(ch_url)
 
-    info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[40]')
-    driver.execute_script("arguments[0].scrollIntoView();", info)
-    time.sleep(1)
-    info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
-    driver.execute_script("arguments[0].scrollIntoView();", info)
+        #Save all picture IDs
+        photostr = []
+        chTitel = driver.title
+        print('Getting Pictures form ' + driver.title)
 
-    #Everything till comment 1-80 is loaded
-    #If jump to list 66 comments 60 till 138 gets loaded
-    elem = driver.find_element_by_id('contentArea')
-    contentList = elem.find_elements_by_tag_name('li')
+        #get number of comments that are loaded
+        elem = driver.find_element_by_id('contentArea')
+        contentList = elem.find_elements_by_tag_name('li')
 
-    #Save all picture IDs
-    photostr = []
-    chTitel = driver.title
-    print('Getting Pictures form ' + driver.title)
-    #get pic ids
-    for row in contentList:
-        #print(row.text)
-        photoRow = row.find_elements_by_xpath(".//*[@class='ic']")
-        for ph in photoRow:
-            tmp = ph.get_attribute('data-navigation')
-            if(tmp.__contains__('vid')):
-                #Videos
-                tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
-            else:
-                #Pictures
-                tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
-            photostr.append(tmp)
+        #scroll page till now more comments get loaded
+        while(len(contentList) > 65):
+            elem = driver.find_element_by_id('contentArea')
+            contentList = elem.find_elements_by_tag_name('li')
+            if(len(contentList) > 30):
+                info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[20]')
+                driver.execute_script("arguments[0].scrollIntoView();", info)
+                time.sleep(SCROLL_PAUSE_TIME)
+            if(len(contentList) > 45):
+                info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[40]')
+                driver.execute_script("arguments[0].scrollIntoView();", info)
+                time.sleep(SCROLL_PAUSE_TIME)
+            if(len(contentList) > 60):
+                info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
+                driver.execute_script("arguments[0].scrollIntoView();", info)
+                time.sleep(SCROLL_PAUSE_TIME)
+            #element = WebDriverWait(driver, 3).until(EC.visibility_of(info))
 
-    #Download the pics
-    for x in photostr:
-        tmp1, tmp2 = x.split('me/')
-        path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
-        #Create Path
-        if not os.path.exists(os.path.dirname(path)):
-            try:
-                os.makedirs(os.path.dirname(path))
-            except OSError as exc:
-                if exc.errno != errno.EEXIST:
-                    raise
-        #Download files
-        response = requests.get(x, stream=True)
-        with open( path, 'wb') as out_file:
-            shutil.copyfileobj(response.raw, out_file)
-            print('Downloading: ' + x)
-        del response
+            #get the currend loaded pic-id
+            photoRow = driver.find_elements_by_xpath(".//*[@class='ic']")
+            for ph in photoRow:
+                #get the number of stars
+                parent = ph.find_element_by_xpath('./..')
+                fav = parent.find_element_by_class_name('fav')
+                if(fav.text.strip()):
+                    #only downlad if pic has more than Min_OF_STARS
+                    if(int(fav.text) > Min_OF_STARS):
+                        try:
+                            tmp = ph.get_attribute('data-navigation')
+                        except StaleElementReferenceException:
+                            #print('FEHLER1: Element not loaded')
+                            continue
+                        if(tmp.__contains__('vid')):
+                            #Videos
+                            tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
+                        else:
+                            #Pictures
+                            tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
+                        photostr.append(tmp)
+
+            print("Scrolling...")
+            #trigger reload of new posts
+            if(len(contentList) > 65):
+                #TODO finde a better way
+                try:
+                    info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[65]')
+                    driver.execute_script("arguments[0].scrollIntoView();", info)
+                except NoSuchElementException:
+                    #print('FEHLER2: No more elements')
+                    continue
+
+        #Remove dublicates
+        photostr = list(dict.fromkeys(photostr))
+        #Download the pics
+        for x in photostr:
+            if(len(x) > 30):
+                tmp1, tmp2 = x.split('me/')
+                path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
+                #Create Path
+                if not os.path.exists(os.path.dirname(path)):
+                    try:
+                        os.makedirs(os.path.dirname(path))
+                    except OSError as exc:
+                        if exc.errno != errno.EEXIST:
+                            raise
+                #Download files
+                response = requests.get(x, stream=True)
+                with open( path, 'wb') as out_file:
+                    shutil.copyfileobj(response.raw, out_file)
+                    print('Downloading: ' + x)
+                    counter +=1
+                del response
+
+#error handling
+except Exception as e:
+    logging.error(traceback.format_exc())
+    print('Error while grabing JC Media. Please tyr again or send the Log to VimHenne')
+
+print('Downloaded: ' + counter.__str__() + ' Files')
 #Close driver
 driver.quit()

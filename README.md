@@ -1,8 +1,8 @@
 # JodelCity
 Python Script to Download Pictures and Videos
 
-IMPORTANT
-ONLY Testet on LINUX with Python 3.7
+* IMPORTANT *
+Only Testet on LINUX with Python 3.7
 
 This provides a script to download all pictues on jodelCity
 
@@ -11,7 +11,21 @@ Supportet are jpg pictures and mp4 video
 To work all below packages must be installed and the chrome or firefoc webdriver.
 The driver must be in your PATH. (Chrome is much faster)
 
-KNOWN BUGS: 
+# How to use
+* download and install the Webdriver for Chrome (http://chromedriver.chromium.org/downloads) or Firefox (https://github.com/mozilla/geckodriver/releases).
+* Put the location of the driver in your PATH.
+* Download and install Python3 and pip
+* Put both Python and pip in your PATH
+* Use pip install [Name] to install
+* 1. requests
+* 2. selenium
+* 3. urllib3
+*
+* If you want you can change the MIN_OF_STARS Value the the the minimum of stars a picture must have to be downloaded. Default is 5
+* run python JodelDownloader.py
+
+
+# KNOWN BUGS: 
 
                Now all Pictures in the entire channel gets Downloaded but not all videos               
                TODO Make sure the video ID is loaded

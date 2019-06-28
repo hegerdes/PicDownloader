@@ -1,6 +1,7 @@
 
 #Folder
-pics/*
+Pics/*
+JC-Code/*
 
 #Log and Config
 *.log

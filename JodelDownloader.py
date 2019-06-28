@@ -136,7 +136,7 @@ try:
         for x in photostr:
             if(len(x) > 30):
                 tmp1, tmp2 = x.split('me/')
-                path = 'pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
+                path = 'Pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
                 #Create Path
                 if not os.path.exists(os.path.dirname(path)):
                     try:

@@ -8,7 +8,7 @@ This provides a script to download all pictues on JodelCity
 
 Supported are jpg pictures and mp4 video
 
-To work all below packages must be installed and the chrome or firefoc webdriver.
+To work all below packages must be installed and the Chrome or Firefox webdriver.
 The driver must be in your PATH. *(Chrome is much faster)*
 
 # How to use

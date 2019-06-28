@@ -40,7 +40,7 @@ from functools import partial
 #pause time to scroll
 SCROLL_PAUSE_TIME = 0.5
 #Number of stars a picture must have to download
-Min_OF_STARS = 5
+MIN_OF_STARS = 5
 
 
 #Start URL
@@ -104,8 +104,8 @@ try:
                 parent = ph.find_element_by_xpath('./..')
                 fav = parent.find_element_by_class_name('fav')
                 if(fav.text.strip()):
-                    #only downlad if pic has more than Min_OF_STARS
-                    if(int(fav.text) > Min_OF_STARS):
+                    #only downlad if pic has more than MIN_OF_STARS
+                    if(int(fav.text) > MIN_OF_STARS):
                         try:
                             tmp = ph.get_attribute('data-navigation')
                         except StaleElementReferenceException:

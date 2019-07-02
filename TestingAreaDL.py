@@ -17,16 +17,24 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
 
 now = datetime.datetime.now()
-url = 'https://www.jodel.city/1234'
+url = 'https://www.jodel.city/4321'
 #url = 'https://www.winfuture.de'
 
-browser = webdriver.Chrome()
+#browser = webdriver.Chrome()
 
-browser.get(url)
-browser.get(url)
+#browser.get(url)
+#browser.get(url)
 
-elem = browser.find_element_by_id('contentArea')
-contentList = elem.find_elements_by_tag_name('li')
+#elem = browser.find_element_by_id('contentArea')
+#contentList = elem.find_elements_by_tag_name('li')
+
+#out =browser.execute_script('$.ajax({data: {ajax: 1,no: 1,to: 600}, cache: false,});')
+
+#print(out)
+
+tmp = requests.get('https://www.jodel.city/6789?ajax=1&no=200&to=300')
+tmp = requests.get('https://www.jodel.city/6789?ajax=1&no=200&to=300')
+print(tmp.content)
 
 # if(len(contentList) > 30):
 #     info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[30]')
@@ -49,42 +57,42 @@ contentList = elem.find_elements_by_tag_name('li')
 #     print(i.text)
 photostr = []
 
-while(len(contentList) > 65):
-    elem = browser.find_element_by_id('contentArea')
-    contentList = elem.find_elements_by_tag_name('li')
-    if(len(contentList) > 30):
-        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[30]')
-        browser.execute_script("arguments[0].scrollIntoView();", info)
-    if(len(contentList) > 45):
-        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[45]')
-        browser.execute_script("arguments[0].scrollIntoView();", info)
-    if(len(contentList) > 60):
-        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
-        browser.execute_script("arguments[0].scrollIntoView();", info)
-    time.sleep(1)
+# while(len(contentList) > 65):
+#     elem = browser.find_element_by_id('contentArea')
+#     contentList = elem.find_elements_by_tag_name('li')
+#     if(len(contentList) > 30):
+#         info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[30]')
+#         browser.execute_script("arguments[0].scrollIntoView();", info)
+#     if(len(contentList) > 45):
+#         info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[45]')
+#         browser.execute_script("arguments[0].scrollIntoView();", info)
+#     if(len(contentList) > 60):
+#         info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
+#         browser.execute_script("arguments[0].scrollIntoView();", info)
+#     time.sleep(1)
 
-    for row in contentList:
-        #print(row.text)
-        photoRow = browser.find_elements_by_xpath(".//*[@class='ic']")
-        for ph in photoRow:
-            tmp = ph.get_attribute('data-navigation')
-            if(tmp.__contains__('vid')):
-                #Videos
-                tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
-            else:
-                #Pictures
-                tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
-            photostr.append(tmp)
-    print("----------------------------")
-    if(len(contentList) > 65):
-        info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[65]')
-        browser.execute_script("arguments[0].scrollIntoView();", info)
+#     for row in contentList:
+#         #print(row.text)
+#         photoRow = browser.find_elements_by_xpath(".//*[@class='ic']")
+#         for ph in photoRow:
+#             tmp = ph.get_attribute('data-navigation')
+#             if(tmp.__contains__('vid')):
+#                 #Videos
+#                 tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
+#             else:
+#                 #Pictures
+#                 tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
+#             photostr.append(tmp)
+#     print("----------------------------")
+#     if(len(contentList) > 65):
+#         info = browser.find_element_by_xpath('//*[@id="contentArea"]/li[65]')
+#         browser.execute_script("arguments[0].scrollIntoView();", info)
 
-photostr = list(dict.fromkeys(photostr))
-for i in photostr:
-    print(i)
+# photostr = list(dict.fromkeys(photostr))
+# for i in photostr:
+#     print(i)
 
-browser.quit()
+#browser.quit()
 
 
 #time.sleep(3)

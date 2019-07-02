@@ -9,12 +9,14 @@
 # KNOWN BUGS:   Now all Pictures in the entire channel gets Downloaded but not all videos
 #               TODO Make sure the video ID is loaded
 #
-# This Script does not get all the pics. JodelCity only loads the first 80
+#               This Script does not get all the pics. JodelCity only loads the first 80
 #               or so comments. So only the pics within thes loaded comments will be found.
 #               SOLVED
 #
 #               Somtimes the dirver chraches without a abvious reason. Just restart the Script
 #               SOLVED
+# Future imprufments:
+#               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300
 ##############################################################################
 import requests
 import re
@@ -43,8 +45,9 @@ SCROLL_PAUSE_TIME = 0.5
 MIN_OF_STARS = 5
 
 
-#Start URL
-url = 'https://www.jodel.city/3300'
+#URLs
+base_url = 'https://www.minus.com/'
+start_chanel_url = base_url + '3300'
 counter = 0
 
 try:
@@ -54,8 +57,8 @@ try:
     #driver = webdriver.Firefox()
 
     #Need to call the URL twice
-    driver.get(url)
-    driver.get(url)
+    driver.get(start_chanel_url)
+    driver.get(start_chanel_url)
 
     dropdown = driver.find_elements_by_class_name('padded-list')
 
@@ -67,7 +70,7 @@ try:
 
     #Go through all chanels
     for ch in chanels:
-        ch_url = 'https://www.jodel.city/' + ch
+        ch_url = base_url + ch
         driver.get(ch_url)
 
         #Save all picture IDs
@@ -117,6 +120,7 @@ try:
                         else:
                             #Pictures
                             tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
+                        #print(tmp)
                         photostr.append(tmp)
 
             print("Scrolling...")

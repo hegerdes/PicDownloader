@@ -1,12 +1,17 @@
-# JodelCity
+# PicDownloader for MINUS.com
 Python Script to Download Pictures and Videos
+
+**NOTE THE SITE DOES NOT EXIST ANYMORE** 
+
+Now its just an example for the usage of selenium
+
 
 **IMPORTANT**
 Only Testet on LINUX with Python 3.7
 
-This provides a script to download all pictues on JodelCity
+This provides a script to download all pictues on Minus. The website heavy uses JavaScript to prevent downloading. So this scripts automatically visits all the channels and downloads the Pics.
 
-Supported are jpg pictures and mp4 video
+Supported are jpg pictures and mp4 video.
 
 To work all below packages must be installed and the Chrome or Firefox webdriver.
 The driver must be in your PATH. *(Chrome is much faster)*
@@ -36,3 +41,6 @@ The driver must be in your PATH. *(Chrome is much faster)*
 
                Somtimes the dirver chraches without a abvious reason. Just restart the Script
                SOLVED
+               
+# Future imprufments:
+               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300 or base_url + '?gal=1' for picture gallery

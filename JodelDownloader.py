@@ -16,7 +16,7 @@
 #               Somtimes the dirver chraches without a abvious reason. Just restart the Script
 #               SOLVED
 # Future imprufments:
-#               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300
+#               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300  or base_url + '?gal=1' for picture gallery
 ##############################################################################
 import requests
 import re

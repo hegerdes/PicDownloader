@@ -1,11 +1,9 @@
-# PicDownloader for MINUS.com
+
+# PicDownloader for Jodel.City
+
 Python Script to Download Pictures and Videos
 
-**NOTE THE SITE DOES NOT EXIST ANYMORE** 
-
-Now its just an example for the usage of selenium
-
-
+**NOTE NO RESPONSIBILITY FOR THE SITE CONTENT**
 **IMPORTANT**
 Only Testet on LINUX with Python 3.7
 
@@ -17,6 +15,7 @@ To work all below packages must be installed and the Chrome or Firefox webdriver
 The driver must be in your PATH. *(Chrome is much faster)*
 
 # How to use
+
 * download and install the Webdriver for Chrome (http://chromedriver.chromium.org/downloads) or Firefox (https://github.com/mozilla/geckodriver/releases).
 * Put the location of the driver in your PATH.
 * Download and install Python3 and pip
@@ -30,9 +29,9 @@ The driver must be in your PATH. *(Chrome is much faster)*
 * run python JodelDownloader.py
 
 
-# KNOWN BUGS: 
+# KNOWN BUGS:
 
-               Now all Pictures in the entire channel gets Downloaded but not all videos               
+               Now all Pictures in the entire channel gets Downloaded but not all videos
                TODO Make sure the video ID is loaded
 
                This Script does not get all the pics. JodelCity only loads the first 80
@@ -41,6 +40,7 @@ The driver must be in your PATH. *(Chrome is much faster)*
 
                Somtimes the dirver chraches without a abvious reason. Just restart the Script
                SOLVED
-               
+
 # Future imprufments:
+
                Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300 or base_url + '?gal=1' for picture gallery

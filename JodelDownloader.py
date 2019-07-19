@@ -16,7 +16,7 @@
 #               Somtimes the dirver chraches without a abvious reason. Just restart the Script
 #               SOLVED
 # Future imprufments:
-#               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300  or base_url + '?gal=1' for picture gallery
+#               Use base_url + '6789?ajax=1&no=200&to=300' to load post 200 to 300 or base_url + '?gal=1' for picture gallery
 ##############################################################################
 import requests
 import re
@@ -46,7 +46,7 @@ MIN_OF_STARS = 5
 
 
 #URLs
-base_url = 'https://www.minus.com/'
+base_url = 'https://www.jodel.city/'
 start_chanel_url = base_url + '3300'
 counter = 0
 
@@ -159,7 +159,7 @@ try:
 #error handling
 except Exception as e:
     logging.error(traceback.format_exc())
-    print('Error while grabing JC Media. Please tyr again or send the Log to VimHenne')
+    print('Error while grabing JC Media. Please tyr again or send the Log to Henne')
 
 print('Downloaded: ' + counter.__str__() + ' Files')
 #Close driver

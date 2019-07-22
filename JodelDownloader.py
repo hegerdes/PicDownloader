@@ -68,7 +68,7 @@ try:
         if(t.get_attribute('data-value') != None):
             chanels.append(t.get_attribute('data-value'))
 
-    #Go through all chanels
+     #Go through all chanels
     for ch in chanels:
         ch_url = base_url + ch
         driver.get(ch_url)

@@ -68,6 +68,9 @@ try:
         if(t.get_attribute('data-value') != None):
             chanels.append(t.get_attribute('data-value'))
 
+    #Remove dick chanel
+    chanels.remove('3300')
+
      #Go through all chanels
     for ch in chanels:
         ch_url = base_url + ch

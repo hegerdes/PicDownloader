@@ -24,9 +24,11 @@ import os
 import traceback
 import logging
 import time
+import emoji
 import errno
 import shutil
 import datetime
+import unicodedata
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
@@ -49,6 +51,7 @@ MIN_OF_STARS = 5
 base_url = 'https://www.jodel.city/'
 start_chanel_url = base_url + '3300'
 counter = 0
+todaydate = str(datetime.datetime.today()).split()[0]
 
 try:
     #Get the driver
@@ -85,7 +88,7 @@ try:
         elem = driver.find_element_by_id('contentArea')
         contentList = elem.find_elements_by_tag_name('li')
 
-        #scroll page till now more comments get loaded
+        #scroll page till no more comments get loaded
         while(len(contentList) > 65):
             elem = driver.find_element_by_id('contentArea')
             contentList = elem.find_elements_by_tag_name('li')
@@ -101,7 +104,6 @@ try:
                 info = driver.find_element_by_xpath('//*[@id="contentArea"]/li[60]')
                 driver.execute_script("arguments[0].scrollIntoView();", info)
                 time.sleep(SCROLL_PAUSE_TIME)
-            #element = WebDriverWait(driver, 3).until(EC.visibility_of(info))
 
             #get the currend loaded pic-id
             photoRow = driver.find_elements_by_xpath(".//*[@class='ic']")
@@ -109,6 +111,27 @@ try:
                 #get the number of stars
                 parent = ph.find_element_by_xpath('./..')
                 fav = parent.find_element_by_class_name('fav')
+                #get tagname
+                tag = parent.find_element_by_class_name('tag')
+                try:
+                    tag_name = tag.find_element_by_class_name('name')
+                    value = tag_name.text
+                except NoSuchElementException:
+                    value = 'NoTag'
+                    continue
+                #serialize to filesave name
+                value = emoji.demojize(value)
+                value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode("utf-8")
+                value = value.replace('::','-') 
+                value = value.replace(':','-')
+                value = value.replace(' ','_')
+                value = value.replace('#','') 
+                value = re.sub(r'[-\s]+', '-', value)
+                #perfome filename beauty
+                if(value[-1:] == '-'):
+                    value = value[:-1]
+                if(value[:1] == '-'):
+                   value = value[1:]
                 if(fav.text.strip()):
                     #only downlad if pic has more than MIN_OF_STARS
                     if(int(fav.text) > MIN_OF_STARS):
@@ -123,7 +146,8 @@ try:
                         else:
                             #Pictures
                             tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
-                        #print(tmp)
+                        #Add to list
+                        tmp = value + ';' + tmp
                         photostr.append(tmp)
 
             print("Scrolling...")
@@ -142,8 +166,9 @@ try:
         #Download the pics
         for x in photostr:
             if(len(x) > 30):
-                tmp1, tmp2 = x.split('me/')
-                path = 'Pics/' + str(datetime.datetime.today()).split()[0] + '/' + ch + '/' + tmp2
+                username, picurl = x.split(';')
+                tmp1, tmp2 = picurl.split('me/')
+                path = 'Pics/' + todaydate + '/' + username + '-' + todaydate + '-'+ tmp2
                 #Create Path
                 if not os.path.exists(os.path.dirname(path)):
                     try:
@@ -152,10 +177,10 @@ try:
                         if exc.errno != errno.EEXIST:
                             raise
                 #Download files
-                response = requests.get(x, stream=True)
+                response = requests.get(picurl, stream=True)
                 with open( path, 'wb') as out_file:
                     shutil.copyfileobj(response.raw, out_file)
-                    print('Downloading: ' + x)
+                    print('Downloading: ' + picurl)
                     counter +=1
                 del response
 

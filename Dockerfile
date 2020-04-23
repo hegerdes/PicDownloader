@@ -4,8 +4,8 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN sudo apt update && sudo apt upgrade -y
+RUN apt-get update && apt-get upgrade -y
 
-RUN sudo apt install python3.7 python3-pip chromium-driver
+RUN apt-get install python3.7 python3-pip chromium-driver -y
 
-RUN sudo pip install -r requirments.txt
+RUN pip install -r requirments.txt

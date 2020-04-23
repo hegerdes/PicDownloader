@@ -29,7 +29,7 @@ The driver must be in your PATH. *(Chrome is much faster)*
 * 2. selenium
 * 3. urllib3
 * 4. emoji
-* Or use `pip install -r requirments.txt` to install all at one
+* Or use `pip install -r requirments.txt` to install all at once
 *
 * If you want you can change the MIN_OF_STARS Value the the the minimum of stars a picture must have to be downloaded. Default is 5
 * run `python JodelDownloader.py`

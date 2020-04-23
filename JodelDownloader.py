@@ -1,4 +1,6 @@
-##########################################################################
+#!/usr/bin/python
+
+# ##########################################################################
 # IMPORTANT
 # ONLY Testet on LINUX with Python 3.7
 # This provides a script to download all pictues on jodelCity
@@ -122,10 +124,10 @@ try:
                 #serialize to filesave name
                 value = emoji.demojize(value)
                 value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore').decode("utf-8")
-                value = value.replace('::','-') 
+                value = value.replace('::','-')
                 value = value.replace(':','-')
                 value = value.replace(' ','_')
-                value = value.replace('#','') 
+                value = value.replace('#','')
                 value = re.sub(r'[-\s]+', '-', value)
                 #perfome filename beauty
                 if(value[-1:] == '-'):
@@ -142,10 +144,10 @@ try:
                             continue
                         if(tmp.__contains__('vid')):
                             #Videos
-                            tmp = 'https://i.jodel.me/' + tmp[4:] + '.mp4'
+                            tmp = 'https://jodel.city/v/' + tmp[4:] + '.mp4'
                         else:
                             #Pictures
-                            tmp = 'https://g.jodel.me/' + tmp[6:] + 't.jpg'
+                            tmp = 'https://jodel.city/p/' + tmp[6:] + 't.jpg'
                         #Add to list
                         tmp = value + ';' + tmp
                         photostr.append(tmp)
@@ -167,7 +169,7 @@ try:
         for x in photostr:
             if(len(x) > 30):
                 username, picurl = x.split(';')
-                tmp1, tmp2 = picurl.split('me/')
+                tmp1, tmp2 = picurl.split('city/')
                 path = 'Pics/' + todaydate + '/' + username + '-' + todaydate + '-'+ tmp2
                 #Create Path
                 if not os.path.exists(os.path.dirname(path)):

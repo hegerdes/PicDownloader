@@ -58,7 +58,7 @@ try:
     # On Windows you might have to put the filepath to the driver in like driver = webdrver.Chrome('Path_to_driver')
     options = webdriver.ChromeOptions()
     options.add_argument('headless')
-    driver = webdriver.Chrome('C:\Libs\chromedriver.exe', chrome_options=options)
+    driver = webdriver.Chrome(chrome_options=options)
     #or
     #driver = webdriver.Firefox()
 

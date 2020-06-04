@@ -50,9 +50,10 @@ MIN_OF_STARS = 5
 
 
 #URLs
+counter = 0
 base_url = 'https://www.jodel.city/'
 start_chanel_url = base_url + '3300'
-counter = 0
+dir_path = os.path.dirname(os.path.realpath(__file__))
 todaydate = str(datetime.datetime.today()).split()[0]
 
 try:
@@ -170,7 +171,8 @@ try:
             if(len(x) > 30):
                 username, picurl = x.split(';')
                 tmp1, tmp2 = picurl.split('city/')
-                path = 'Pics/' + todaydate + '/' + username + '-' + todaydate + '-'+ tmp2
+
+                path = str(dir_path) + '/Pics/' + todaydate + '/' + username + '-' + todaydate + '-'+ tmp2
                 #Create Path
                 if not os.path.exists(os.path.dirname(path)):
                     try:

@@ -3,8 +3,6 @@
 
 Python Script to Download Pictures and Videos
 
-**UPDATE:** Jode.city doesn't work anymore. You have to find other pages but this still provides a good example for webscraping
-
 **NOTE: NO RESPONSIBILITY FOR THE SITE CONTENT**
 
 **IMPORTANT**

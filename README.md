@@ -18,17 +18,20 @@ The driver must be in your PATH. *(Chrome is much faster)*
 
 # How to use
 
-* download and install the Webdriver for Chrome (http://chromedriver.chromium.org/downloads) or Firefox (https://github.com/mozilla/geckodriver/releases).
-* Put the location of the driver in your PATH.
-* Download and install Python3 and pip
+* download the Webdriver for Chrome (http://chromedriver.chromium.org/downloads) or Firefox (https://github.com/mozilla/geckodriver/releases).
+* Put the location of the driver in your PATH or specify the driver location in the source code.
+* Download and install [Python3](https://www.python.org/downloads/release/python-377/) and pip
 * Put both Python and pip in your PATH
-* Use pip install [Name] to install
+* Use `pip install [Name]` to install 
 * 1. requests
-* 1. selenium
-* 1. urllib3
+* 2. selenium
+* 3. urllib3
+* 4. emoji
+* Or use `pip install -r requirments.txt` to install all at once
+* *(You might need admin privlage)*
 *
 * If you want you can change the MIN_OF_STARS Value the the the minimum of stars a picture must have to be downloaded. Default is 5
-* run python JodelDownloader.py
+* run `python JodelDownloader.py`
 
 
 # KNOWN BUGS:

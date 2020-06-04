@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # ##########################################################################
 # IMPORTANT
 # ONLY Testet on LINUX with Python 3.7
@@ -58,7 +56,10 @@ todaydate = str(datetime.datetime.today()).split()[0]
 
 try:
     #Get the driver
-    driver = webdriver.Chrome()
+    # On Windows you might have to put the filepath to the driver in like driver = webdrver.Chrome('Path_to_driver')
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    driver = webdriver.Chrome(chrome_options=options)
     #or
     #driver = webdriver.Firefox()
 

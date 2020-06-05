@@ -25,7 +25,7 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: sudo docker build -t jc/JodelDL:1.0 .
+      run: sudo docker build -t jc/jodel_dl:1.0 .
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script

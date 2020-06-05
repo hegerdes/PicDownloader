@@ -75,8 +75,14 @@ try:
         if(t.get_attribute('data-value') != None):
             chanels.append(t.get_attribute('data-value'))
 
+
+    if(len(chanels) < 1):
+        print('No Chanels. System exit')
+        exit(0)
+
     #Remove dick chanel
-    chanels.remove('3300')
+    if('3300' in chanels):
+        chanels.remove('3300')
 
      #Go through all chanels
     for ch in chanels:

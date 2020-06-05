@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM python:3.8-buster
 
 WORKDIR /usr/src/app
 
@@ -6,6 +6,6 @@ COPY . .
 
 RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install python3.7 python3-pip chromium-driver -y
+RUN apt-get install chromium-driver -y
 
 RUN pip install -r requirments.txt

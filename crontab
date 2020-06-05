@@ -1,3 +1,3 @@
-55 21 * * * python JodelDownloader.py >> /dev/stdout 2>&1
-55 9 * * * python JodelDownloader.py >> /dev/stdout 2>&1
+55 21 * * * python /usr/src/app/JodelDownloader.py >> /dev/stdout 2>&1
+55 9 * * * python /usr/src/app/JodelDownloader.py >> /dev/stdout 2>&1
 # crontab requires an empty line at the end of the file

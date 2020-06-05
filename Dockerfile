@@ -4,8 +4,12 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN apt-get update && apt-get upgrade -y
+COPY crontab /etc/cron/crontab
 
-RUN apt-get install chromium-driver -y
+RUN apt-get update && apt-get upgrade -y && apt-get install chromium-driver cron -y
 
 RUN pip install -r requirments.txt
+
+RUN crontab /etc/cron/crontab
+
+CMD ["crond", "-f"]

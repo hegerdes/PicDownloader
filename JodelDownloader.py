@@ -152,7 +152,11 @@ try:
                             continue
                         if(tmp.__contains__('vid')):
                             #Videos
-                            tmp = 'https://jodel.city/v/' + tmp[4:] + '.mp4'
+                            ph = ph.find_element_by_class_name('entry')
+                            helper = ph.get_attribute('style')
+                            #help.split('/')
+                            vid = helper.split('/')[-1][:-8]
+                            tmp = 'https://jodel.city/v/' + vid + '.mp4'
                         else:
                             #Pictures
                             tmp = 'https://jodel.city/p/' + tmp[6:] + 't.jpg'

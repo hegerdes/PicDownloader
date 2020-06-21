@@ -18,6 +18,7 @@ The driver must be in your PATH. *(Chrome is much faster)*
 
 # How to use
 
+## Native
 * download the Webdriver for Chrome (http://chromedriver.chromium.org/downloads) or Firefox (https://github.com/mozilla/geckodriver/releases).
 * Put the location of the driver in your PATH or specify the driver location in the source code.
 * Download and install [Python3](https://www.python.org/downloads/release/python-377/) and pip
@@ -33,6 +34,13 @@ The driver must be in your PATH. *(Chrome is much faster)*
 * If you want you can change the MIN_OF_STARS Value the the the minimum of stars a picture must have to be downloaded. Default is 5
 * run `python JodelDownloader.py`
 
+## Docker
+
+This project provides a Dockerfile. You just need to build the Image by `docker build -t jc_dl .`
+
+To run the Image type `docker run jc_dl`
+
+The container now runns forever and ownloads the pictures twice a day. All pics are within the docker container.
 
 # KNOWN BUGS:
 

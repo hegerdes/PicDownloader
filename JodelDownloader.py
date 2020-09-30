@@ -20,6 +20,7 @@
 ##############################################################################
 import requests
 import re
+import json
 import os
 import traceback
 import logging
@@ -84,16 +85,43 @@ try:
     if('3300' in chanels):
         chanels.remove('3300')
 
+    session = requests.Session()
+    for c in driver.get_cookies():
+        session.cookies.set(c['name'], c['value'])
+    
+
      #Go through all chanels
     for ch in chanels:
         ch_url = base_url + ch
         driver.get(ch_url)
-
+        
         #Save all picture IDs
         photostr = []
+
         chTitel = driver.title
         print('Getting Pictures form ' + driver.title)
 
+        gal = session.get(base_url + ch + '?gal=2')
+        gal_str = str(gal.text)
+        if len(gal_str) > 0:
+            gal_json = json.loads(gal_str)
+            for entry in gal_json:
+                tag = 'None'
+                tmp = 'None'
+                if ('tag' in entry): tag = entry['tag']
+                if ('vidhash' in entry): 
+                    tmp = 'https://jodel.city/v/' + entry['vidhash'] +'.mp4'
+                    photostr.append(tag + ';' + tmp)
+                if('src' in entry):
+                    tmp = 'https://jodel.city/' + entry['src']
+                    photostr.append(tag + ';' + tmp)
+                    continue
+                if('msrc' in entry):
+                    tmp = 'https://jodel.city/' + entry['msrc']
+                    #Enable if you want all pics
+                    #photostr.append(tag + ';' + tmp)
+        
+        
         #get number of comments that are loaded
         elem = driver.find_element_by_id('contentArea')
         contentList = elem.find_elements_by_tag_name('li')
@@ -157,12 +185,13 @@ try:
                             #help.split('/')
                             vid = helper.split('/')[-1][:-8]
                             tmp = 'https://jodel.city/v/' + vid + '.mp4'
+                            tmp = value + ';' + tmp
+                            photostr.append(tmp)
                         else:
                             #Pictures
                             tmp = 'https://jodel.city/p/' + tmp[6:] + 't.jpg'
                         #Add to list
-                        tmp = value + ';' + tmp
-                        photostr.append(tmp)
+
 
             print("Scrolling...")
             #trigger reload of new posts

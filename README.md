@@ -9,11 +9,11 @@ Python Script to Download Pictures and Videos
 
 Only Testet on LINUX with Python 3.7
 
-This provides a script to download all pictues on Minus. The website heavy uses JavaScript to prevent downloading. So this scripts automatically visits all the channels and downloads the Pics.
+This provides a script to download all pictures on Minus. The website heavy uses JavaScript to prevent downloading. So this script automatically visits all the channels and downloads the Pics.
 
-Supported are jpg pictures and mp4 video.
+Supports jpg pictures and mp4 video.
 
-To work all below packages must be installed and the Chrome or Firefox webdriver.
+To work all below packages must be installed from the Chrome or Firefox webdriver.
 The driver must be in your PATH. *(Chrome is much faster)*
 
 # How to use

@@ -88,13 +88,13 @@ try:
     session = requests.Session()
     for c in driver.get_cookies():
         session.cookies.set(c['name'], c['value'])
-    
+
 
      #Go through all chanels
     for ch in chanels:
         ch_url = base_url + ch
         driver.get(ch_url)
-        
+
         #Save all picture IDs
         photostr = []
 
@@ -109,7 +109,7 @@ try:
                 tag = 'None'
                 tmp = 'None'
                 if ('tag' in entry): tag = entry['tag']
-                if ('vidhash' in entry): 
+                if ('vidhash' in entry):
                     tmp = 'https://jodel.city/v/' + entry['vidhash'] +'.mp4'
                     photostr.append(tag + ';' + tmp)
                 if('src' in entry):
@@ -120,8 +120,8 @@ try:
                     tmp = 'https://jodel.city/' + entry['msrc']
                     #Enable if you want all pics
                     #photostr.append(tag + ';' + tmp)
-        
-        
+
+
         #get number of comments that are loaded
         elem = driver.find_element_by_id('contentArea')
         contentList = elem.find_elements_by_tag_name('li')
@@ -190,6 +190,7 @@ try:
                         else:
                             #Pictures
                             tmp = 'https://jodel.city/p/' + tmp[6:] + 't.jpg'
+                            photostr.append(value + ';' + tmp)
                         #Add to list
 
 
